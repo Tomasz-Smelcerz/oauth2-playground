@@ -7,6 +7,8 @@
     "csurf": "^1.8.3",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
+    "google-id-token": "^0.1.5",
+    "jade": "^1.11.0",
     "oauthio": "^0.3.1",
     "request": "^2.62.0"
   }

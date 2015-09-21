@@ -1,0 +1,48 @@
+doctype html
+html(lang="en")
+  head
+    title= pageTitle
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script.
+      $(document).ready(function(){
+        $("#loginBtn").click(function(){
+          window.location.href = "http://localhost:8080/signin";
+        });
+        $("#showCurl").click(function(){
+          $("#curlCommand").html('curl -X GET "https://www.googleapis.com/userinfo/v2/me" -H "Authorization: Bearer ' + $("#accessToken").val() + '"');
+        });
+        $("#profileBtn").click(function() {
+          $.ajax({url: "http://localhost:8080/profile?accessToken=" + $("#accessToken").val(), success: function(result) {
+            $("#profile").html(result);
+            $("#profileImg").attr("src", JSON.parse(result).picture);
+            $("#profileImg").html(JSON.parse(result).picture);
+          }});
+        });
+      });
+  body
+    h1 OAuth2 playground
+    #container.col
+      button#loginBtn Get Access Token
+
+    #container
+      label(for='accessToken') Access Token   
+      //input#accessToken(type='text', readonly='readonly', size=80, value= accessToken)
+      input#accessToken(type='text', size=80, value= accessToken)
+
+    #container.col
+      button#showCurl Get curl for profile info:
+      p#curlCommand 
+      button#profileBtn Get Profile Info:
+    // 
+      #container
+      p ID Token
+      input#idToken(type='text', value= idToken)
+
+    #container
+      p Profile info:
+      textarea#profile(rows=20, cols=50) 
+    #container
+      img#profileImg
+    
