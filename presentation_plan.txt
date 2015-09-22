@@ -1,0 +1,48 @@
+
+Introduction to Oauth2
+
+What is oauth2
+
+Definition
+
+The need for delegating authorization is nothing new, actually.
+ - Two examples from "real world".
+
+But how do we solve such problems in modern IT world?
+Actual needs and problems:
+We produce more and more data. And it keeps growing.
+to reduce data "silos" we need applications.
+ - Some "example" apps.
+
+So how do we allow the apps to access "our" data/services?
+ - Password-based credentials? No, thanks!
+
+
+Oauth2 bits and pieces
+- actors
+- access token (and it's parameters)
+
+
+Authorizaton code Grant
+(github)
+
+Implicit grant
+(builder, google)
+
+Client Credentials, Resource Owner Credentials - just mention...
+
+
+So far so good, but...
+(Controversies)
+
+OpenId Connect (just mention...)
+
+Final thoughts.
+How to start?
+
+google developers console,
+Oauth.io
+
+
+Q&A
+

@@ -13,13 +13,14 @@ var app = express();
 app.set('view engine', 'jade');
 
 var provider = "google";
+var view = "oauthio";
 var idTokenParser = new googleIdToken({ getKeys: getGoogleCerts });
 initializeJunk();
 
 // MAPPINGS
 
 app.get('/', function(req, res) {
-  res.render('index', { pageTitle: 'OAuth2 playground' });
+  res.render('oauthio', { pageTitle: 'OAuth2 playground' });
 });
 
 
@@ -34,7 +35,7 @@ app.get('/oauth/redirect', oauth.redirect(function(result, req, res) {
       //console.log("parsed id_token is:\n" + JSON.stringify(token));
       //result['id_token_parsed'] = token;
       //res.json(result);
-      res.render('index', { pageTitle: 'OAuth2 playground', accessToken: result.access_token, idToken: result.id_token, idTokenParsed: token });
+      res.render('oauthio', { pageTitle: 'OAuth2 playground', accessToken: result.access_token, idToken: result.id_token, idTokenParsed: JSON.stringify(token) });
       console.log(result);
       console.log("----------------------------------------");
     }

@@ -1,0 +1,45 @@
+doctype html
+html(lang="en")
+  head
+    title= pageTitle
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    script.
+      $(document).ready(function(){
+        $("#loginBtn").click(function(){
+          window.location.href = "http://localhost:8080/signin";
+        });
+        $("#showCurl").click(function(){
+          $("#curlCommand").html('curl -X GET "https://www.googleapis.com/userinfo/v2/me" -H "Authorization: Bearer ' + $("#accessToken").val() + '"');
+        });
+        $("#profileBtn").click(function() {
+          $.ajax({url: "http://localhost:8080/profile?accessToken=" + $("#accessToken").val(), success: function(result) {
+            $("#profile").html(result);
+            $("#profileImg").attr("src", JSON.parse(result).picture);
+          }});
+        });
+      });
+  body
+    div(class='panel panel-success')
+      div(class='panel-heading')
+        h1(class='panel-title-lg') OAuth.io Playground 
+        div(class="panel-body") 
+          div(class='form-group')
+            button#loginBtn(class='btn btn-info') Get Access Token
+            div(class='form-group')
+              input#accessToken(type='text', size=80, value= accessToken, placeholder='Access Token')
+            div(class='form-group')
+              button#profileBtn(class='btn btn-info') Read Profile Data:
+              button#showCurl(class='btn btn-info') Get curl for profile info:
+              p#curlCommand 
+            div(class='form-group')
+              textarea#profile(rows=20, cols=50, readonly='readonly', placeholder='Profile Data') 
+            div(class='form-group')
+              img#profileImg
+            div(class='form-group')
+              p ID Token Info
+              textarea#idToken(rows=3, cols=50, readonly='readonly', value= idToken)= idToken
+              div(class='form-group')
+              textarea#idTokenParsed(rows=20, cols=50, readonly='readonly', value= idTokenParsed)= idTokenParsed
+
