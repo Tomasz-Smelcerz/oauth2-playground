@@ -17,32 +17,27 @@ html(lang="en")
           $.ajax({url: "http://localhost:8080/profile?accessToken=" + $("#accessToken").val(), success: function(result) {
             $("#profile").html(result);
             $("#profileImg").attr("src", JSON.parse(result).picture);
-            $("#profileImg").html(JSON.parse(result).picture);
           }});
         });
       });
   body
-    h1 OAuth2 playground
-    #container.col
-      button#loginBtn Get Access Token
-
-    #container
-      label(for='accessToken') Access Token   
-      //input#accessToken(type='text', readonly='readonly', size=80, value= accessToken)
-      input#accessToken(type='text', size=80, value= accessToken)
-
-    #container.col
-      button#showCurl Get curl for profile info:
-      p#curlCommand 
-      button#profileBtn Get Profile Info:
-    // 
-      #container
-      p ID Token
-      input#idToken(type='text', value= idToken)
-
-    #container
-      p Profile info:
-      textarea#profile(rows=20, cols=50) 
-    #container
-      img#profileImg
-    
+    div(class='panel panel-success')
+      div(class='panel-heading')
+        h1(class='panel-title-lg') OAuth2 playground 
+        div(class="panel-body") 
+          button#loginBtn(class='btn btn-info') Get Access Token
+          div(class='row')
+            label(class='label label-info', for='accessToken') Access Token   
+            input#accessToken(type='text', size=80, value= accessToken)
+          div(class='row')
+            button#profileBtn(class='btn btn-info') Get Profile Info:
+            button#showCurl(class='btn btn-info') Get curl for profile info:
+            p#curlCommand 
+          div
+            //p ID Token
+            input#idToken(type='hidden', value= idToken)
+          div
+            label(class='label label-info', for='profile') Profile info
+            textarea#profile(rows=20, cols=50) 
+          div
+            img#profileImg

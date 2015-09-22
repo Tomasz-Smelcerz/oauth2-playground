@@ -1,0 +1,40 @@
+doctype html
+html(lang="en")
+  head
+    title OAuth2 Demo for github.com
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    script.
+      $(document).ready(function(){
+        $("#getAuthorizationCodeBtn").click(function() {
+          window.location.href = "https://github.com/login/oauth/authorize?client_id=" + "#{clientId}" + "&redirect_uri=" + "#{redirectUri}" + "&state=" + "#{state}" + "&scope=" + "#{scope}";
+        });
+        $("#getAccessTokenBtn").click(function() {
+          window.location.href = "http://localhost:8080/accessToken?authorizationCode=" + "#{authorizationCode}";
+        });
+        $("#showCurl").click(function() {
+          $("#curlCommand").val("curl -iv -X POST 'https://github.com/login/oauth/access_token' -d 'client_id=#{clientId}&client_secret=#{clientSecret}&code=#{authorizationCode}&redirect_uri=#{redirectUri}&state=#{state}'");
+        });
+        $("#createNewRepository").click(function() {
+          window.location.href = "http://localhost:8080/createRepository?authorizationCode=" + "#{authorizationCode}" + "&accessToken=" + "#{accessToken}" + "&repositoryName=" + $("#repositoryName").val() ;
+        });
+      });
+  body
+    div(class='panel panel-success')
+      div(class='panel-heading')
+        h1(class='panel-title-lg') OAuth2 playground 
+        div(class="panel-body") 
+          div(class='form-group')
+            button#getAuthorizationCodeBtn(class='btn btn-info') Get Authorization Code
+            input#scope(class='form-control', type='text', size=10, placeholder='Scope') 
+            input#authorizationCode(class='form-control', type='text', size=80, value= authorizationCode placeholder='Authorization Code')
+          div(class='form-group')
+            button#showCurl(class='btn btn-info') Curl for Access Token:
+            input#curlCommand(class='form-control', type='text', readonly='readonly', size=80, placeholder='Curl for Access Token')
+          div(class='form-group')
+            button#getAccessTokenBtn(class='btn btn-info') Exchange Authorization Code for Access Token.
+            input#accessToken(class='form-control', type='text', readonly='readonly', size=80, value= accessToken placeholder='Access Token')
+          div(class='form-group')
+            button#createNewRepository(class='btn btn-info') Create New Repository
+            input#repositoryName(class='form-control', type='text', size=10, placeholder='Repository Name') 
