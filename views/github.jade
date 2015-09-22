@@ -1,14 +1,14 @@
 doctype html
 html(lang="en")
   head
-    title OAuth2 Demo for github.com
+    title OAuth2 Demo for GitHub
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
     script.
       $(document).ready(function(){
         $("#getAuthorizationCodeBtn").click(function() {
-          window.location.href = "https://github.com/login/oauth/authorize?client_id=" + "#{clientId}" + "&redirect_uri=" + "#{redirectUri}" + "&state=" + "#{state}" + "&scope=" + "#{scope}";
+          window.location.href = "https://github.com/login/oauth/authorize?client_id=" + "#{clientId}" + "&redirect_uri=" + "#{redirectUri}" + "&state=" + "#{state}" + "&scope=" + $("#scope").val();
         });
         $("#getAccessTokenBtn").click(function() {
           window.location.href = "http://localhost:8080/accessToken?authorizationCode=" + "#{authorizationCode}";
@@ -23,7 +23,7 @@ html(lang="en")
   body
     div(class='panel panel-success')
       div(class='panel-heading')
-        h1(class='panel-title-lg') OAuth2 playground 
+        h1(class='panel-title-lg') GitHub OAuth2 playground 
         div(class="panel-body") 
           div(class='form-group')
             button#getAuthorizationCodeBtn(class='btn btn-info') Get Authorization Code
@@ -38,3 +38,4 @@ html(lang="en")
           div(class='form-group')
             button#createNewRepository(class='btn btn-info') Create New Repository
             input#repositoryName(class='form-control', type='text', size=10, placeholder='Repository Name') 
+            textarea#res(class='form-control' cols='100' rows='20' readonly='readonly')= result

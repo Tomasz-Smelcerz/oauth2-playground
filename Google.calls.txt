@@ -8,3 +8,9 @@ https://developers.google.com/oauthplayground/
 http://oauth-io.github.io/oauth-js/#
 
 a09acf7faa5720d9dce1
+
+
+
+
+//Create repo curl.
+curl -iv -X POST 'https://api.github.com/user/repos' -d '{ "name": "TestRepository99", "description": "This is your first repository", "homepage": "https://github.com", "private": false, "has_issues": true, "has_wiki": true, "has_downloads": true }' -H "Authorization: Bearer 56acc9d9fc012c3a66491a0c91f1dd8cc5d657b9"

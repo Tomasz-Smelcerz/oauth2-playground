@@ -12,7 +12,9 @@ var redirectUri = 'http://localhost:8080/code';
 var state = 'notGoodOne';
 var scope = 'repo';
 
+
 // MAPPINGS
+
 app.get('/', function(req, res) {
   res.render(view, {'clientId': clientId, 'clientSecret': clientSecret, 'redirectUri': redirectUri, 'state': state});
 });
@@ -26,7 +28,6 @@ app.get('/accessToken', function(req, res) {
   var authorizationCode = req.query.authorizationCode;
   console.log(authorizationCode);
   requestAccessToken(authorizationCode, function(body) {
-    //console.log(body);
     
     var accessToken = extractAccessToken(body);
     
@@ -40,21 +41,19 @@ app.get('/createRepository', function(req, res) {
   var accessToken = req.query.accessToken;
   var authorizationCode = req.query.authorizationCode;
  
-  console.log(repositoryName);
-  console.log(accessToken);
-  console.log(authorizationCode);
- 
-  //res.render(view, {'clientId': clientId, 'clientSecret': clientSecret, 'redirectUri': redirectUri, 'state': state, 'authorizationCode': authorizationCode, 'accessToken': accessToken});
-
   createNewRepository(repositoryName, accessToken, function(body) {
 
     console.log(body);
-    
-    res.render(view, {'clientId': clientId, 'clientSecret': clientSecret, 'redirectUri': redirectUri, 'state': state, 'authorizationCode': authorizationCode, 'accessToken': accessToken});
+
+    var result = JSON.stringify(body);
+     
+    res.render(view, {'clientId': clientId, 'clientSecret': clientSecret, 'redirectUri': redirectUri, 'state': state, 'authorizationCode': authorizationCode, 'accessToken': accessToken, 'result': result});
   });
 
 });
 
+
+//App bootstrap
 
 var server = app.listen(8080, function () {
   var host = server.address().address;
@@ -63,6 +62,8 @@ var server = app.listen(8080, function () {
   console.log('The app is listening at http://%s:%s', host, port);
 });
 
+
+//Helper functions
 
 function requestAccessToken(authorizationCode, next) {
 
@@ -97,7 +98,9 @@ curl -X POST 'https://api.github.com/user/repos' -d '{ "name": "TestRepository1"
 */
   var options = {
     url: 'https://api.github.com/user/repos',
-    form: {
+    method: 'POST',
+    json: true,
+    body: {
       name: repositoryName,
       description: 'Test Repository',
       homepage: 'https://github.com',
@@ -112,13 +115,10 @@ curl -X POST 'https://api.github.com/user/repos' -d '{ "name": "TestRepository1"
   var callback = function (error, response, body) {
     if (error) {
       console.log('ERROR: ' + error);
+      next('ERROR: ' + error);
     }
 
-    if (!error && (response.statusCode == 200 || response.statuscode == 201)) {
-      next(body);
-    } else {
-      next(body)
-    }
+    next(body)
   }
 
   request(options, callback); 
