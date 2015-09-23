@@ -7,15 +7,21 @@ Definition
 
 The need for delegating authorization is nothing new, actually.
  - Two examples from "real world".
-
+   - valet parking
+   - access cards
+                           
 But how do we solve such problems in modern IT world?
-Actual needs and problems:
-We produce more and more data. And it keeps growing.
-to reduce data "silos" we need applications.
- - Some "example" apps.
+ - Two "example" apps.
+   - Printer app
+   - Calendar integration app
+- 1 no such problem (client/server world)
+- 2 very hard (early systems, no api, only web-scraping)
+- 3 first apis, full-access only (not very secure)
+  - why are password not very secure?
+- 4 first delegated authorization apis (proprietary, harder to integrate)
+- 5 OAuth as an attempt to standardize
 
-So how do we allow the apps to access "our" data/services?
- - Password-based credentials? No, thanks!
+We are talking about OAuth 2 here.
 
 
 Oauth2 bits and pieces
@@ -34,6 +40,7 @@ Client Credentials, Resource Owner Credentials - just mention...
 
 So far so good, but...
 (Controversies)
+A bit of history again: OAuth 1 vs OAuth2
 
 OpenId Connect (just mention...)
 
