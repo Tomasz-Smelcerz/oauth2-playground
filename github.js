@@ -28,7 +28,7 @@ app.get('/accessToken', function(req, res) {
   var authorizationCode = req.query.authorizationCode;
   console.log(authorizationCode);
   requestAccessToken(authorizationCode, function(body) {
-    
+    console.log(body); 
     var accessToken = extractAccessToken(body);
     
     res.render(view, {'clientId': clientId, 'clientSecret': clientSecret, 'redirectUri': redirectUri, 'state': state, 'authorizationCode': authorizationCode, 'accessToken': accessToken});
