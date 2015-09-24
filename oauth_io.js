@@ -27,17 +27,17 @@ app.get('/', function(req, res) {
 app.get('/signin', oauth.auth(provider, 'http://localhost:8080/oauth/redirect'));
 
 app.get('/oauth/redirect', oauth.redirect(function(result, req, res) {
+
+  console.log(result);
+  console.log(req.query);
+  console.log("----------------------------------------");
   
   idTokenParser.decode(result['id_token'], function(err, token) {
     if(err) {
         console.log("error while parsing the google token: " + err);
+        res.render(view, { pageTitle: 'OAuth2 playground', accessToken: 'Error', idToken: JSON.stringify(req.query), idTokenParsed: '' });
     } else {
-      //console.log("parsed id_token is:\n" + JSON.stringify(token));
-      //result['id_token_parsed'] = token;
-      //res.json(result);
-      res.render('oauthio', { pageTitle: 'OAuth2 playground', accessToken: result.access_token, idToken: result.id_token, idTokenParsed: JSON.stringify(token) });
-      console.log(result);
-      console.log("----------------------------------------");
+      res.render(view, { pageTitle: 'OAuth2 playground', accessToken: result.access_token, idToken: result.id_token, idTokenParsed: JSON.stringify(token) });
     }
   });
 
