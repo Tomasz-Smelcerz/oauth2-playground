@@ -75,6 +75,9 @@ function requestAccessToken(authorizationCode, next) {
       code: authorizationCode,
       redirect_uri: redirectUri,
       'state': state
+    },
+    headers: {
+      'Accept': 'application/json'
     }
   };
 
@@ -124,17 +127,6 @@ curl -X POST 'https://api.github.com/user/repos' -d '{ "name": "TestRepository1"
   request(options, callback); 
 }
 
-
 function extractAccessToken(body) {
-  var accessToken = '';
-    
-  var tokens = body.split('&');
-  for(var i=0; i<tokens.length; i++) {
-    if(tokens[i].startsWith('access_token=')) {
-      accessToken = 'Bearer ' + tokens[i].substr(13, tokens[i].length);
-    }
-  }
-
-  return accessToken;
+  return 'Bearer ' + JSON.parse(body).access_token;
 }
-
