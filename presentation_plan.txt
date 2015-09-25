@@ -1,1 +1,0 @@
-/mnt/VM_shared/development/node.js/oauth2-playground/presentation_plan.txt
